@@ -1,29 +1,32 @@
-name: CI/CD Pipeline
+name: CI/CD Pipeline  # Name of the workflow
 
 on:
-  push:
+  push:  # Trigger the workflow on push events
     branches:
-      - main
-  pull_request:
+      - main  # Only for the main branch
+  pull_request:  # Trigger the workflow on pull request events
     branches:
-      - main
+      - main  # Only for the main branch
+  schedule:  # Schedule a nightly run
+    - cron: '0 0 * * *'  # Runs at midnight UTC every day
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
+  test:  # Define a job named 'test'
+    runs-on: ubuntu-latest  # Specify the OS to run the job
 
-    steps:
-    - uses: actions/checkout@v3
+    steps:  # Define the steps to be executed in the job
+    - uses: actions/checkout@v3  # Checkout the code from the repository
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
+    - name: Set up Python  # Step to set up the Python environment
+      uses: actions/setup-python@v4  # Action to set up Python
       with:
-        python-version: '3.9'
+        python-version: '3.9'  # Specify the Python version to use
 
-    - name: Install dependencies
+    - name: Install dependencies  # Step to install project dependencies
       run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
+        python -m pip install --upgrade pip  # Upgrade pip to the latest version
+        pip install -r requirements.txt  # Install dependencies from requirements.txt
        
-    - name: Run tests
-      run: pytest
+    - name: Run tests  # Step to run the test suite
+      run: pytest  # Execute pytest to run the tests
+
